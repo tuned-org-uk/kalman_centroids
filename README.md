@@ -13,6 +13,31 @@ This approach solves two critical bottlenecks in the manifold pipeline:
 1.  **Speed**: Eliminates the expensive "guess and check" `compute_optimal_k` heuristic.
 2.  **Topology**: Constructs the Graph Laplacian using **Statistical Overlap** (Bhattacharyya Distance) rather than simple Euclidean proximity, preserving the true manifold structure.
 
+## Quick Example
+```
+use kalman_centroids::KalmanClusterer;
+
+fn main() {
+    let rows: Vec<Vec<f64>> = load_embeddings(); 
+    let max_k = 256; // Upper bound on number of clusters
+    let n_items = rows.len();
+
+    // Initialize adaptive clusterer
+    let mut clusterer = KalmanClusterer::new(max_k, n_items);
+
+    // Single-pass clustering with automatic K selection
+    clusterer.fit(&rows); 
+    
+    println!("Auto-selected {} centroids", clusterer.centroids.len());
+    
+    // Access results
+    for (i, centroid) in clusterer.centroids.iter().enumerate() {
+        println!("Centroid {}: mean={:?}, var={:?}, count={}", 
+                 i, centroid.mean, centroid.variance, centroid.count);
+    }
+}
+```
+
 ## Key Features
 
 - **🚀 Single-Pass Learning**: Adapts centroids dynamically as data streams in. No need to load the entire dataset into memory at once.
