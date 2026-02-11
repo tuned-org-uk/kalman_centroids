@@ -7,7 +7,7 @@
 
 ## Overview
 
-`kalman_centroids` replaces traditional multi-trial K-Means (Lloyd's algorithm) with a **Kalman Filter-based adaptive streaming algorithm**. Instead of treating centroids as static points in geometric space, this library models them as **Gaussian distributions** (Mean $\mu$ + Variance $\Sigma$) that evolve over time.
+`kalman_clustering` replaces traditional multi-trial K-Means (Lloyd's algorithm) with a **Kalman Filter-based adaptive streaming algorithm**. Instead of treating centroids as static points in geometric space, this library models them as **Gaussian distributions** (Mean $\mu$ + Variance $\Sigma$) that evolve over time.
 
 This approach solves two critical bottlenecks in the manifold pipeline:
 1.  **Speed**: Eliminates the expensive "guess and check" `compute_optimal_k` heuristic.
@@ -15,7 +15,7 @@ This approach solves two critical bottlenecks in the manifold pipeline:
 
 ## Quick Example
 ```rust
-use kalman_centroids::KalmanClusterer;
+use kalman_clustering::KalmanClusterer;
 
 fn main() {
     let rows: Vec<Vec<f64>> = load_embeddings(); 
